@@ -32,7 +32,7 @@ class Article extends \yii\db\ActiveRecord
           ],
       ];
 }
-      public static $status = ['上线','下线'];
+      public static $status = ['下线','上线'];
 //      书写规则
       public function rules()
       {

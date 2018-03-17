@@ -10,15 +10,24 @@ namespace backend\controllers;
 
 
 use backend\models\Article_cate;
+use yii\data\Pagination;
 use yii\web\Controller;
 
 class ArticleCateController extends Controller
 {
       public function actionShow(){
-//            获取分类的所有数据
-            $values = Article_cate::find()->all();
+            //      书写分页的方法 获取数据
+            $query = Article_cate::find();
+//          获取数据的总的条数
+            $count = $query->count();
+            $page = new Pagination([
+                'totalCount' => $count,
+                'pageSize' => 1,
+            ]);
+//          查询数据
+            $values = $query->offset($page->offset)->limit($page->limit)->all();
 //            加载分类的视图并传递数据
-            return $this->render('list',compact('values'));
+            return $this->render('list',compact('values','page'));
       }
 //      分类列表的添加
       public function actionAdd(){

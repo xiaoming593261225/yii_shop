@@ -14,7 +14,7 @@ use yii\db\ActiveRecord;
 class Article_cate extends ActiveRecord
 {
 //      设置分类的属性
-      public static $status = ['在线','下线'];
+      public static $status = ['下线','上线'];
       public function rules()
       {
             return [

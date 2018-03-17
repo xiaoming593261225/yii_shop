@@ -15,7 +15,13 @@
                   <th><?=$value->id?></th>
                   <th><?=$value->name?></th>
                   <th><?=$value->sort?></th>
-                  <th><?=\backend\models\Article_cate::$status[$value->status]?></th>
+                  <th><?php
+                        if($value->status){
+                              echo \yii\bootstrap\Html::a("",["","id"=>$value->id],["class"=>"glyphicon glyphicon-ok btn btn-info"]);
+                        }else{
+                              echo \yii\bootstrap\Html::a("",["","id"=>$value->id],["class"=>"glyphicon glyphicon-remove btn btn-danger"]);
+                        }
+                        ?></th>
                   <th><?=$value->intro?></th>
                   <th><?=$value->is_help?></th>
                   <th>
@@ -25,3 +31,6 @@
             </tr>
       <?php endforeach;?>
 </table>
+<?=\yii\widgets\LinkPager::widget([
+    'pagination' => $page
+]);

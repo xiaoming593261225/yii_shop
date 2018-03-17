@@ -1,6 +1,5 @@
 <?php
 /* @var $this yii\web\View */
-//asdsfafws
 ?>
 <h1>品牌的展示</h1>
 <a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn-primary btn"><span class="glyphicon glyphicon-plus"></span></span></a>
@@ -19,7 +18,10 @@
               <td><?=$value->id?></td>
               <td><?=$value->name?></td>
               <td><?=$value->sort?></td>
-              <td><img src="/<?=$value->log?>" height="30"></td>
+              <td><?php
+                    $imgLog=strpos($value->log,"ttp://")==false?"/".$value->log:$value->log;
+                    echo \yii\bootstrap\Html::img($imgLog,['height'=>30]);
+                    ?></td>
               <td><?=\backend\models\Brand::$status[$value->status]?></td>
               <td><?=$value->intro?></td>
               <td>
