@@ -1,5 +1,6 @@
 <?php
 /* @var $this yii\web\View */
+//asdsfafws
 ?>
 <h1>品牌的展示</h1>
 <a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn-primary btn"><span class="glyphicon glyphicon-plus"></span></span></a>
