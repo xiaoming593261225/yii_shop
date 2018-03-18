@@ -19,7 +19,11 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "bailangzhan/yii2-webuploader": "^1.1",
-        "crazyfd/yii2-qiniu": "^1.03"
+        "crazyfd/yii2-qiniu": "^1.03",
+        "creocoder/yii2-nested-sets": "^0.9.0",
+        "kucha/ueditor": "^1.21",
+        "liyuze/yii2-ztree": "^1.0",
+        "leandrogehlen/yii2-treegrid": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
