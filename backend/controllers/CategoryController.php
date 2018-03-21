@@ -20,7 +20,7 @@ class CategoryController extends \yii\web\Controller
           $category = new Category();
 //          查出所有的分类
           $cate = Category::find()->asArray()->all();
-          $cate[]=["name"=>"一级菜单","parent_id"=>0];
+          $cate[]=["id"=>0,"name"=>"一级菜单","parent_id"=>0];
 //          转为json对象
           $cateJson =json_encode($cate);
 //          var_dump($cateJson);exit;
@@ -62,7 +62,7 @@ class CategoryController extends \yii\web\Controller
                   if($category->validate()){
                         if($category->parent_id==0){
 //                              一级分类的做法
-                              $category->makeRoot();
+                              $category->save();
                               \Yii::$app->session->setFlash('success','创建一级分类:'.$category->name."成功");
                               return $this->redirect(['category/show']);
                         }else{

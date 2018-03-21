@@ -18,9 +18,29 @@ echo \liyuze\ztree\ZTree::widget([
     'nodes' => $cateJson,
 ]);
 
-echo $form->field($category,'intro')->widget('kucha\ueditor\UEditor',[]);
+echo $form->field($category,'intro')->textInput();
 echo \yii\bootstrap\Html::submitButton('提交',['class'=>'btn btn-info']);
 $form = \yii\bootstrap\ActiveForm::end();
+
+
+//定义jS代码块
+$js=<<<JS
+//得到ztree对象
+var treeObj = $.fn.zTree.getZTreeObj("w1");
+// 找到节点当前对象
+var node = treeObj.getNodeByParam("id", "$category->parent_id", null);
+// zTree对象加上节点对象
+treeObj.selectNode(node);
+//选中当前节点
+$('#category-parent_id').val($category->parent_id);
+treeObj.expandAll(true);
+//展开方法
+JS;
+//追加
+$this->registerJs($js);
+
+
+
 ?>
 <script>
     function onClick(e,treeId, treeNode) {

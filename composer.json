@@ -23,7 +23,8 @@
         "creocoder/yii2-nested-sets": "^0.9.0",
         "kucha/ueditor": "^1.21",
         "liyuze/yii2-ztree": "^1.0",
-        "leandrogehlen/yii2-treegrid": "^1.0"
+        "leandrogehlen/yii2-treegrid": "^1.0",
+        "dmstr/yii2-adminlte-asset": "^2.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

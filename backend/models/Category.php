@@ -69,4 +69,8 @@ class Category extends \yii\db\ActiveRecord
             'tree' => '树',
         ];
     }
+
+    public function getNameText(){
+          return str_repeat("-",$this->depth*4).$this->name;
+    }
 }

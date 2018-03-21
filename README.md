@@ -236,7 +236,162 @@ $key=$model->id;
 
 
 
+# 商品的管理
 
+
+## 表的合理设计
+
+goods 商品表
+
+goodsintro表
+
+goodspicture品的多图表
+
+goods的添加
+
+         $goods = new Goods();
+         
+//           得到所有的分类数据
+
+          $category = Category::find()->orderBy('tree,lft')->all();
+            $category=ArrayHelper::map($category,'id','nameText');
+            
+//            得到所有的品牌数据
+
+            $brand = Brand::find()->all();
+            $brand=ArrayHelper::map($brand,'id','name');
+            
+//            商品详情
+
+            $intro = new GoodsIntro();
+            $request = \Yii::$app->request;
+            if($request->isPost){
+                  $goods->load($request->post());
+                  $intro->load($request->post());         $goods = new Goods();
+                  
+//           得到所有的分类数据
+
+          $category = Category::find()->orderBy('tree,lft')->all();
+            $category=ArrayHelper::map($category,'id','nameText');
+            
+//            得到所有的品牌数据
+
+            $brand = Brand::find()->all();
+            $brand=ArrayHelper::map($brand,'id','name');
+            
+//            商品详情
+
+            $intro = new GoodsIntro();
+            $request = \Yii::$app->request;
+            if($request->isPost){
+                  $goods->load($request->post());
+                  $intro->load($request->post());
+
+   货号的处理
+   
+                        if(!$goods->sn){
+                        
+//                              用年月日生成商品的编号
+
+                              $snDaty = strtotime(date("Ymd"));
+                              
+//                               找出当日的商品数量
+
+    $count = Goods::find()->where(['>','inserttime',$snDaty])->count();
+                              $count+=1;
+//                              赋值
+
+            $goods->sn=date("Ymd").$count+1;
+            
+//        var_dump( $goods->sn);exit;
+
+                        }
+                        if($goods->save()){
+                        
+//                              商品的内容
+
+        $intro->goods_id=$goods->id;
+                              $intro->save();
+                              
+  //                            多图的处理
+  
+                              foreach ($goods->logimg as $image){
+                                    $picture = new GoodsPicture();
+                                    $picture->goods_id=$goods->id;
+                                    $picture->path=$image;
+                                    $picture->save();
+                              }
+                              \Yii::$app->session->setFlash('success','添加数据成功');
+                              return $this->redirect(['goods/show']);
+                        }
+                  }else{
+                        var_dump($goods->errors);exit;
+                  }
+
+
+//     搜索的处理
+
+ $minPrice = \Yii::$app->request->get('minPrice');
+ 
+  $maxPrice = \Yii::$app->request->get('maxPrice');
+  
+  $keyword = \Yii::$app->request->get('keyword');
+            if($minPrice){
+             $query->andWhere("shop_price>={$minPrice}");
+            }
+          if($maxPrice){
+             $query->andWhere("shop_price<={$maxPrice}");
+          }
+          $query->andWhere("name like '%{$keyword}%' or sn like '%{$keyword}%' ");
+          
+//          获取数据的总的条数
+
+          $count = $query->count();
+          $page = new Pagination([
+              'totalCount' => $count,
+              'pageSize' => 2,
+          ]);
+          
+//          查询数据
+
+          $values = $query->offset($page->offset)->limit($page->limit)->all();
+        return $this->render('show',compact('values','page'));
+
+
+
+
+//   删除的处理
+
+
+  public  function actionDel($id){
+  
+  $goods = Goods::findOne($id)->delete();
+    $intro = GoodsIntro::findOne(['goods_id'=>$id])->delete();
+     $path = GoodsPicture::deleteAll(['goods_id'=>$id]);
+           if($goods && $intro && $path){
+                 \Yii::$app->session->setFlash('success','删除数据成功');
+                 return $this->redirect(['show']);
+           }
+      }
+      
+// 在多图的编辑回显中遇到了一些bug
+
+  }
+  
+//            图片的回显与编辑处理
+
+            $images = GoodsPicture::find()->where(['goods_id'=>$id])->asArray()->all();
+            $images = array_column($images,'path');
+            
+//         var_dump($images);exit;
+
+            $goods->logimg=$images;
+            return $this->render("add",compact('goods','category','brand','intro'));
+            
+// 删除以前的多图记录
+
+
+ GoodsPicture::deleteAll(['goods_id'=>$id]);
 
 
 

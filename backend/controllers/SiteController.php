@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\Admin;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -74,22 +75,31 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            $model->password = '';
-
+          $request = \Yii::$app->request;
+          if($request->isPost){
+                $model->load($request->post());
+//                var_dump($model->username);exit;
+                $admin = Admin::find()->where(['username'=>$model->username])->one();
+//                判断用户是否存在  存在再次去验证密码
+                if ($admin) {
+                      $pwd = Admin::find()->where(['password'=>$model->password])->one();
+                      if($pwd){
+                            \Yii::$app->session->setFlash("success","登录成功");
+                            return $this->redirect(['goods/show']);
+                      }else{
+//                            Yii::$app->session->setFlash('danger','密码不正确');
+                            return $this->redirect(['site/login']);
+                      }
+                }else{
+//                      Yii::$app->session->setFlash('danger','用户名不存在');
+                      return $this->redirect(['site/login']);
+                }
+          }
             return $this->render('login', [
                 'model' => $model,
             ]);
-        }
     }
-
     /**
      * Logout action.
      *
