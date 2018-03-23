@@ -2,7 +2,7 @@
 /* @var $this yii\web\View */
 ?>
 <h1>商品的分类</h1>
-<a href="<?=\yii\helpers\Url::to(['category/add'])?>" class="btn btn-primary">添加</a>
+<!--<a href="--><?//=\yii\helpers\Url::to(['category/add'])?><!--" class="btn btn-primary">添加</a>-->
 <table class="table table-bordered">
     <tr>
         <td>

@@ -2,7 +2,7 @@
 /* @var $this yii\web\View */
 ?>
 <h1>品牌的展示</h1>
-<a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn-primary btn"><span class="glyphicon glyphicon-plus"></span></span></a>
+<!--<a href="--><?//=\yii\helpers\Url::to(['add'])?><!--" class="btn-primary btn"><span class="glyphicon glyphicon-plus"></span></span></a>-->
 <table class="table table-bordered">
     <tr>
         <th>编号</th>

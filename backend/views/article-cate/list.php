@@ -1,5 +1,5 @@
 <h1>文章分类列表的显示</h1>
-<a href="<?=\yii\helpers\Url::to(['add'])?>"class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
+<!--<a href="--><?//=\yii\helpers\Url::to(['add'])?><!--"class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>-->
 <table class="table-bordered table">
       <tr>
             <th>编号</th>

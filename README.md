@@ -11,7 +11,7 @@
 
 - [x] 商品管理：
 
-- [ ] 账号管理：
+- [x] 账号管理：
 
 - [ ] 权限管理：
 
@@ -393,6 +393,66 @@ goods的添加
 
  GoodsPicture::deleteAll(['goods_id'=>$id]);
 
+# 8.管理员模块完善
+## 8.1需求
+    管理员增删改查
+
+    管理员自动登录
+    
+    管理员登录记住密码
+    
+    编辑不修改密码使用原密码
+    
+## 8.2设计要点
+
+    编辑完善
+    
+    数字化IP地址
+    
+## 8.3要点难点及解决方案
+
+    场景使用
+    
+        解决：
+        
+        模型创建添加场景和编辑场景
+        
+        控制器引用场景
+        
+###       在model中添加  
+        
+    public function scenarios()
+    {
+          $hello = parent::scenarios();
+          $hello['add']=['username','password_hash','status'];
+          $hello['edit']=['username','password_hash','status'];
+          return $hello;
+    }
+    
+    
+###     在controller中添加
+
+  $password = $admin->password_hash;
+  
+//            var_dump($password);exit;
+
+            $admin->setScenario('edit');
+            $request = \Yii::$app->request;
+            if($request->isPost){
+                  $admin->load($request->post());
+                  if ($admin->validate()){
+//                        var_dump($admin->password_hash);exit;
+
+////                        利用三元判断选择
+
+               $admin->password_hash=$admin->password_hash?\Yii::$app->security->generatePasswordHash($admin->password_hash):$password;
+//                        var_dump($admin->password_hash);exit;
+
+                        if($admin->save()){
+                              return $this->redirect(['/admin/login']);
+                        }
+                  }
+            }
 
 
 

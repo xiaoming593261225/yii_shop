@@ -1,6 +1,6 @@
 <h1>文章列表的显示</h1>
 <a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn btn-info"><span class="glyphicon glyphicon-plus btn"></span></a>
-<a href="<?=\yii\helpers\Url::to(['article-cate/show'])?>" class="btn btn-info"><span class="glyphicon glyphicon-plus btn"></span>文章分类列表</a>
+<!--<a href="--><?//=\yii\helpers\Url::to(['article-cate/show'])?><!--" class="btn btn-info"><span class="glyphicon glyphicon-plus btn"></span>文章分类列表</a>-->
 <table class="table table-bordered">
       <tr>
             <th>编号</th>

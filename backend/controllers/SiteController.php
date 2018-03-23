@@ -76,29 +76,31 @@ class SiteController extends Controller
     public function actionLogin()
     {
         $model = new LoginForm();
-          $request = \Yii::$app->request;
-          if($request->isPost){
-                $model->load($request->post());
-//                var_dump($model->username);exit;
-                $admin = Admin::find()->where(['username'=>$model->username])->one();
-//                判断用户是否存在  存在再次去验证密码
-                if ($admin) {
-                      $pwd = Admin::find()->where(['password'=>$model->password])->one();
-                      if($pwd){
-                            \Yii::$app->session->setFlash("success","登录成功");
-                            return $this->redirect(['goods/show']);
-                      }else{
-//                            Yii::$app->session->setFlash('danger','密码不正确');
-                            return $this->redirect(['site/login']);
-                      }
-                }else{
-//                      Yii::$app->session->setFlash('danger','用户名不存在');
-                      return $this->redirect(['site/login']);
-                }
-          }
-            return $this->render('login', [
-                'model' => $model,
+        $request = Yii::$app->request;
+        if($request->isPost){
+              $model->load($request->post());
+              if($model->validate()){
+                  $admin = Admin::findOne(['username'=>$model->username,'status'=>1]);
+                  if($admin){
+                        if(Yii::$app->security->validatePassword($model->password,$admin->password_hash)){
+                              Yii::$app->user->login($admin,1);
+                              return $this->redirect(['/goods/show']);
+                        }else{
+
+                        }
+                  }else{
+                        $model->addError('username','用户名不存在或禁用');
+                  }
+              }else{
+                    var_dump($model->errors);exit;
+              }
+        }
+            return $this->render('login', [ 'model' => $model,
             ]);
+    }
+    public function actionAdd(){
+          $admin = new Admin();
+          return $this->render('add',compact('admin'));
     }
     /**
      * Logout action.

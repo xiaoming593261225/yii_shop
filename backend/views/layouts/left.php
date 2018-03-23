@@ -8,7 +8,7 @@
                 <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>欢迎光临</p>
+                <p>欢迎:<?=Yii::$app->user->identity->username?></p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> X X X</a>
             </div>
@@ -18,6 +18,32 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
+                    [
+                        'label' => '管理员列表显示',
+                        'icon' => '++++',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => '列表显示', 'icon' => 'dashboard', 'url' => ['/admin/show'],],
+                            ['label' => '添加', 'icon' => 'file-code-o', 'url' => ['/admin/add'],]
+//                            [
+//                                'label' => 'Level One',
+//                                'icon' => 'circle-o',
+//                                'url' => '#',
+//                                'items' => [
+//                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
+//                                    [
+//                                        'label' => 'Level Two',
+//                                        'icon' => 'circle-o',
+//                                        'url' => '#',
+//                                        'items' => [
+//                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+//                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+//                                        ],
+//                                    ],
+//                                ],
+//                            ],
+                        ],
+                    ],
                     [
                         'label' => '商品列表的展示',
                         'icon' => '++++',
