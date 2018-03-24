@@ -40,6 +40,7 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
      * @inheritdoc
      *
      */
+    public $pers;
     public static $status=['禁止','激活'];
 
     public function scenarios()
@@ -57,7 +58,7 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
             [['username','status'], 'required'],
               [['password_hash','status'],'safe','on' => ['edit']],
               [['password_hash'],'required','on' => ['add']],
-              [['log'],'safe'],
+              [['log','pers'],'safe'],
         ];
     }
 
@@ -78,6 +79,7 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
             'updated_at' => 'Updated At',
             'login_time' => '登录的时间',
             'login_ip' => '登录的ip',
+              'pers'=>'角色',
         ];
     }
 

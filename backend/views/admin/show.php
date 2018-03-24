@@ -8,7 +8,6 @@
         <th>添加时间</th>
         <th>登录时间</th>
         <th>状态</th>
-        <th>图片</th>
         <th>ip</th>
         <th>操作</th>
     </tr>
@@ -18,7 +17,16 @@
         <td><?=$value->username?></td>
         <td><?=date('Y-m-d',$value->created_at)?></td>
         <td><?=date('Y-m-d',$value->login_time)?></td>
-        <td><?=\backend\models\Admin::$status[$value->status]?></td>
+        <td>
+              <?php
+              if($value->status){
+                    echo \yii\bootstrap\Html::a("",["","id"=>$value->id],["class"=>"glyphicon glyphicon-ok btn btn-info"]);
+              }else{
+                    echo \yii\bootstrap\Html::a("",["","id"=>$value->id],["class"=>"glyphicon glyphicon-remove btn btn-danger"]);
+              }
+              ?>
+
+        </td>
         <td>
 
               <?php

@@ -1,6 +1,6 @@
 <?php
 $form = \yii\bootstrap\ActiveForm::begin();
-echo $form->field($admin,'username');
+echo $form->field($admin,'username')->textInput(['disabled'=>""]);
 echo $form->field($admin,'password_hash');
 //echo $form->field($admin,'log')->fileInput();
 echo $form->field($admin,'status')->inline()->radioList(['禁用','激活'],['value'=>1]);
