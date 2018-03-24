@@ -13,7 +13,7 @@
 
 - [x] 账号管理：
 
-- [ ] 权限管理：
+- [x]  权限管理：
 
 - [ ] 菜单管理：
 
@@ -152,7 +152,7 @@ brand
             return $this->render('add',compact('model','cateArr','content'));
       }
 
-# 商品的管理
+# 5 商品的管理
 
 # 	需求
 ##### 1.	保存每天创建多少商品,创建商品的时候,更新当天创建商品数量
@@ -393,8 +393,8 @@ goods的添加
 
  GoodsPicture::deleteAll(['goods_id'=>$id]);
 
-# 8.管理员模块完善
-## 8.1需求
+# .管理员模块完善
+## .1需求
     管理员增删改查
 
     管理员自动登录
@@ -403,7 +403,7 @@ goods的添加
     
     编辑不修改密码使用原密码
     
-## 8.2设计要点
+## .2设计要点
 
     编辑完善
     
@@ -454,6 +454,36 @@ goods的添加
                   }
             }
 
+
+# 9 对RBAC 的基础概念的认知
+
+利用数据迁移的方式建立rbac的数据表 用户与角色之间的联系（多对多）还有就是权限与角色之间的联系（多对多）。
+
+1、权限的添加、编辑、删除的制作
+
+2、角色的添加、编辑、删除制作   权限与角色之间的关联，关系的建立。
+
+3、将用户表与角色表进行连接 ， 在创建用户时 同时给用户追加上角色， 同时创建的用户也将拥有一定的权限操作
+
+eg: 添加
+
+//                  创建auth对象
+
+                  $auth = \Yii::$app->authManager;
+//                  创建权限
+
+                  $perm = $auth->createPermission($model->name);
+                  
+//                  描述
+
+                  $perm->description=$model->description;
+                  
+//                  入库的操作
+
+                  if ($auth->add($perm)) {
+                        \Yii::$app->session->setFlash('success','权限添加成功');
+                        return $this->refresh();
+                  }
 
 
  
