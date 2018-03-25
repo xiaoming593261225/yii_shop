@@ -27,13 +27,6 @@
               ?>
 
         </td>
-        <td>
-
-              <?php
-              $imgLog=strpos($value->log,"ttp://")==false?"/".$value->log:$value->log;
-              echo \yii\bootstrap\Html::img($imgLog,['height'=>30]);
-              ?>
-        </td>
         <td><?=long2ip($value->login_ip)?></td>
         <td>
             <a href="<?=\yii\helpers\Url::to(['edit','id'=>$value->id])?>" class="btn btn-primary">编辑</a>

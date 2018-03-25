@@ -63,13 +63,13 @@ class CategoryController extends \yii\web\Controller
                         if($category->parent_id==0){
 //                              一级分类的做法
                               $category->save();
-                              \Yii::$app->session->setFlash('success','创建一级分类:'.$category->name."成功");
+                              \Yii::$app->session->setFlash('success','编辑一级分类:'.$category->name."成功");
                               return $this->redirect(['category/show']);
                         }else{
 //                              二级的分类
                               $cateParent = Category::findOne($category->parent_id);
                               $category->prependTo($cateParent);
-                              \Yii::$app->session->setFlash('success','创建二级分类');
+                              \Yii::$app->session->setFlash('success','编辑二级分类');
                               return $this->redirect(['category/show']);
                         }
                   }else{

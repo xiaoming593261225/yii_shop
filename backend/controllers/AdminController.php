@@ -56,26 +56,27 @@ class AdminController extends \yii\web\Controller
             $request = \Yii::$app->request;
             $admin->setScenario('add');
 //            在创建管理员 角色的获取
-            $assign = new AuthAssignment();
-            $item = new AuthItem();
-//            创建auth对象
-            $auth = \Yii::$app->authManager;
-//            获取所有的角色
-            $pers = $auth->getRoles();
-//            二维转一维数组的转
-            $persArr = ArrayHelper::map($pers,'name','name');
+//            $assign = new AuthAssignment();
+//            $item = new AuthItem();
+////            创建auth对象
+//            $auth = \Yii::$app->authManager;
+////            获取所有的角色
+//            $pers = $auth->getRoles();
+////            二维转一维数组的转
+//            $persArr = ArrayHelper::map($pers,'name','name');
 //            var_dump($persArr);exit;
             if($request->isPost){
                   $admin->load($request->post());
-                  $item->load($request->post());
+//                  $item->load($request->post());
                   if ($admin->validate()){
 //                        var_dump($admin->username);exit;
                         $admin->password_hash=\Yii::$app->security->generatePasswordHash($admin->password_hash);
                         $admin->auth_key=\Yii::$app->security->generateRandomString();
+                        $admin->updated_at=time();
                         if($admin->save()){
-                              $assign->item_name=$item->name;
-                              $assign->user_id=$admin->id;
-                              $assign->save();
+//                              $assign->item_name=$item->name;
+//                              $assign->user_id=$admin->id;
+//                              $assign->save();
                               return $this->redirect(['/admin/login']);
                         }else{
 
@@ -126,9 +127,16 @@ class AdminController extends \yii\web\Controller
       }
 
       public function actionDel($id){
-            if (Admin::findOne($id)->delete()) {
-                  \Yii::$app->session->setFlash('success','删除成功');
+//            var_dump(\Yii::$app->user->identity->id);
+//            exit;
+            if ( \Yii::$app->user->identity->id==$id) {
+                  \Yii::$app->session->setFlash('danger', '不能删除当前用户');
+                  return $this->redirect(['admin/show']);
+            }else {
+                  Admin::findOne($id)->delete();
+                  \Yii::$app->session->setFlash('success', '删除成功');
                   return $this->redirect(['admin/show']);
             }
+
       }
 }

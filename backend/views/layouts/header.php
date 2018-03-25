@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' .'yii商场后台' . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' .'yii 商 场 后 台' . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -18,9 +18,12 @@ use yii\helpers\Html;
         <div class="navbar-custom-menu">
 
             <ul class="nav navbar-nav">
-                                <!-- User Account: style can be found in dropdown.less -->
-
+                <li style="padding-top: 15px;color: white;font-size: 16px;"><?php
+                            $t=time();
+                            echo(date("Y年m月d日 H:i:s",$t));
+                            ?></li>
                 <li class="dropdown user user-menu">
+
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
                         <span class="hidden-xs"><?=Yii::$app->user->identity->username?></span>
@@ -31,9 +34,9 @@ use yii\helpers\Html;
                             <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
                                  alt="User Image"/>
 
-                            <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                            <p><?=Yii::$app->user->identity->username?>:一名php工程师
+                                <br>
+                                <small><?php echo date("Y 年 m 月 d 日")?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -51,11 +54,11 @@ use yii\helpers\Html;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+<!--                                <a href="#" class="btn btn-default btn-flat">Profile</a>-->
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
-                                    'Sign out',
+                                    '退 出',
                                     ['/admin/logout'],
                                     ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>
