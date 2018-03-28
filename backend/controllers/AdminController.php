@@ -35,7 +35,7 @@ class AdminController extends \yii\web\Controller
                               if(\Yii::$app->security->validatePassword($model->password,$admin->password_hash)){
                                     \Yii::$app->user->login($admin);
 //                                    var_dump($model->getErrors());exit;
-                                    return $this->redirect(['/goods/show']);
+                                    return $this->redirect(['/user/show']);
                               }else{
                                    // echo 123223;exit;
                                     $model->addError('passsword','密码不行');
