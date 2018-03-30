@@ -12,11 +12,18 @@ use yii\helpers\ArrayHelper;
 
 class GoodsController extends \yii\web\Controller
 {
+      /*
+       * 富文本
+       */
       public function actions()
       {
             return [
                 'upload' => [
                     'class' => 'kucha\ueditor\UEditorAction',
+                    'config' => [
+                        "imageUrlPrefix"  => "http://www.admin.com",//图片访问路径前缀
+
+                    ]
                 ]
             ];
       }

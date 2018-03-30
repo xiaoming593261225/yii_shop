@@ -1,7 +1,7 @@
 <div class="header w1210 bc mt15">
       <!-- 头部上半部分 start 包括 logo、搜索、用户中心和购物车结算 -->
       <div class="logo w1210">
-            <h1 class="fl"><a href="index.html"><img src="/images/logo.png" alt="京西商城"></a></h1>
+            <h1 class="fl"><a href="<?=\yii\helpers\Url::to(['/index/show'])?>"><img src="/images/logo.png" alt="京西商城"></a></h1>
             <!-- 头部搜索 start -->
             <div class="search fl">
                   <div class="search_form">
@@ -34,7 +34,7 @@
                         </dt>
                         <dd>
                               <div class="prompt">
-                                    您好，请<a href="">登录</a>
+                                    您好，请<a href="<?=\yii\helpers\Url::to(['/user/login'])?>">登录</a>
                               </div>
                               <div class="uclist mt10">
                                     <ul class="list1 fl">
@@ -124,7 +124,7 @@
 
             <div class="navitems fl">
                   <ul class="fl">
-                        <li class="current"><a href="">首页</a></li>
+                        <li class="current"><a href="<?=\yii\helpers\Url::to(['index/show'])?>">首页</a></li>
                         <li><a href="">电脑频道</a></li>
                         <li><a href="">家用电器</a></li>
                         <li><a href="">品牌大全</a></li>

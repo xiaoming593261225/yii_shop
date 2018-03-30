@@ -7,6 +7,8 @@ $params = array_merge(
 );
 
 return [
+    'defaultRoute' => 'index/show',
+//    关闭yii的顶部与尾部的框架页面
     'layout'=>false,
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),

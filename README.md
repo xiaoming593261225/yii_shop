@@ -485,7 +485,93 @@ eg: 添加
                         return $this->refresh();
                   }
 
+# 前端的处理
 
+#### 商城的注册
+1、user表的创建  视图 控制器
+
+2、在注册中运用layer插件  
+
+##### 难点-手机号码的验证
+
+在阿里云中注册短信并开通服务
+
+//            生成一个随机的四位数的验证码
+
+            $code = rand(100000,999999);
+            
+//            配置文件的处理
+
+            $config = [
+                'access_key' => 'LTAIVT7sbzyaWKPO',
+                'access_secret' => 'G8NVvNejkHTwqkwSdmaSIWUwBVqUFY',
+                'sign_name' => '明明',
+            ];
+            $aliSms = new AliSms();
+            
+            //创建一个短信发送的对象
+            
+            $response = $aliSms->sendSms($phone, 'SMS_128651055', ['code'=> $code], $config);
+            
+//                  var_dump($phone);exit;
+
+            if($response->Message==="OK"){
+                  //            存入session
+                  \Yii::$app->session->set("tel_".$phone,$code);
+                  return $code;
+            }else{
+                  var_dump($response->Message);
+            }
+
+
+# 视图中
+
+function bindPhoneNum(){
+
+//		    手机验证码的制作
+
+            $.getJSON('/user/send-sms?phone='+$('#phone').val(),function (data) {
+            
+//                    console.debug(data);
+
+            });
+            
+			//启用输入框
+			
+			$('#captcha').prop('disabled',false);
+			var time=50;
+			var interval = setInterval(function(){
+				time--;
+				if(time<=0){
+					clearInterval(interval);
+					
+					var html = '获取验证码';
+					$('#get_captcha').prop('disabled',false);
+				} else{
+					var html = time + ' 秒后再次获取';
+					$('#get_captcha').prop('disabled',true);
+				}
+				
+				$('#get_captcha').val(html);
+			},1000);
+		}		
  
-  
+##  登录的制作
+
+登录框中的用户名验证，如果用户名存在 再验证密码 
+如果都正确 进入 商品中心或者网站的首页
+
+# 购物车做法
+
+选定商品
+        
+        商品加入购物车-》cookie 或者数据库  
+        
+        对数据的判断 未登录时-》商品将加入cookie中列表的显示、编辑、删除等操作 在结算时 需要登录 才能完成结算 用户个人地址 联系电话 等处理
+        
+        如果用户已经登录 用户选中商品后可以直接将商品存入数据库 同时在完成选择后列表的显示、编辑、删除等操作 直接结算 付账
+        
+    
+        
+
   
