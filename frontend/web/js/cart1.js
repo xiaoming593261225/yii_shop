@@ -61,7 +61,6 @@ $(function(){
 		$(".col5 span").each(function(){
 			total += parseFloat($(this).text());
 		});
-
 		$("#total").text(total.toFixed(2));
 
 
@@ -92,8 +91,9 @@ $(function(){
 		$("#total").text(total.toFixed(2));
 
 	});
-
-
+    /**
+	 * 删除
+     */
 
     $('.col6>a').click(function () {
         // console.log(2122);

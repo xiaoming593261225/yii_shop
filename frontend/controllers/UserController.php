@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\components\ShopCart;
 use frontend\models\LoginForm;
 use frontend\models\User;
 use Mrgoon\AliSms\AliSms;
@@ -100,6 +101,8 @@ class UserController extends \yii\web\Controller
                                     \Yii::$app->user->login($user,$admin->reMessage?3600*24*7:0);
                                     $user->login_time=time();
                                     $user->login_ip=ip2long(\Yii::$app->request->userIP);
+//                                    数据的同步
+                                    (new ShopCart())->dbSyn()->flush()->save();
                                     if ($user->save(false)) {
                                           $result=[
                                               'status'=>1,

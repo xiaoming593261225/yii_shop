@@ -34,7 +34,7 @@
                         </dt>
                         <dd>
                               <div class="prompt">
-                                    您好，请<a href="<?=\yii\helpers\Url::to(['/user/login'])?>">登录</a>
+                                    您好，请<a href="<?=Yii::$app->user->identity->username?>">登录</a>
                               </div>
                               <div class="uclist mt10">
                                     <ul class="list1 fl">
@@ -70,7 +70,7 @@
             <div class="cart fl">
                   <dl>
                         <dt>
-                              <a href="">去购物车结算</a>
+                              <a href="<?=\yii\helpers\Url::to(['/goods/cart-list'])?>">去购物车结算</a>
                               <b></b>
                         </dt>
                         <dd>

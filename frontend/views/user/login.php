@@ -113,6 +113,16 @@
 <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/layer/layer.js"></script>
 <script type="text/javascript">
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
     $(function () {
 //        验证码
        $("#btn,#code").click(function () {
@@ -121,6 +131,7 @@
                $("#code").attr('src',data.url);
            });
        });
+
 //            登录按钮触发
         $(".login_btn").click(function () {
 //                alert('asddfsdf');
@@ -129,7 +140,13 @@
 //                console.dir(relust);
                 if(relust.status==1) {
                     alert('登录成功');
-                    self.location.href="/user/show/";
+                    var url = getQueryVariable('url');
+                    if(url==false){
+                        window.location.href="/index/show/";
+                    }else {
+                        window.location.href=decodeURIComponent(url);
+                    }
+
                 }
 //                验证码的验证
                 if(relust.status==-2){
