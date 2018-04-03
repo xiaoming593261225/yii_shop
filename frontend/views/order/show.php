@@ -229,7 +229,7 @@
                 console.debug(data);
                 if(data.status){
                     alert("下单成功");
-                    self.location.href="/order/list/";
+                    self.location.href="/order/list?id="+data.orderId;
                 }
                 if(data.status==0){
                     alert('库存不足！')
