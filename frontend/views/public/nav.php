@@ -87,53 +87,67 @@
       <div style="clear:both;"></div>
 
       <!-- 导航条部分 start -->
-      <div class="nav w1210 bc mt10">
-            <!--  商品分类部分 start-->
-            <div class="category fl <?=Yii::$app->controller->id."/".Yii::$app->controller->action->id==="index/show"?"":"cat1"?>"> <!-- 非首页，需要添加cat1类 -->
-                  <div class="cat_hd">  <!-- 注意，首页在此div上只需要添加cat_hd类，非首页，默认收缩分类时添加上off类，鼠标滑过时展开菜单则将off类换成on类 -->
-                        <h2>全部商品分类</h2>
-                        <em></em>
-                  </div>
+    <?php
+    ob_start();
+    ?>
+    <div class="nav w1210 bc mt10">
+        <!--  商品分类部分 start-->
+        <div class="category fl <?=Yii::$app->controller->id."/".Yii::$app->controller->action->id==="index/show"?"":"cat1"?>"> <!-- 非首页，需要添加cat1类 -->
+            <div class="cat_hd">  <!-- 注意，首页在此div上只需要添加cat_hd类，非首页，默认收缩分类时添加上off类，鼠标滑过时展开菜单则将off类换成on类 -->
+                <h2>全部商品分类</h2>
+                <em></em>
+            </div>
 
-                  <div class="cat_bd <?=Yii::$app->controller->id."/".Yii::$app->controller->action->id==="index/show"?"":"none"?>">
-<!--                        循环输出商品的一级列表-->
-                        <?php foreach (\backend\models\Category::find()->where(['parent_id'=>0])->all() as $k1=>$v1):?>
-                        <div class="cat <?=$k1==0?"item1":""?>">
-                              <h3><a href="<?=\yii\helpers\Url::to(['list','id'=>$v1->id])?>"><?=$v1->name?></a> <b></b></h3>
-                              <div class="cat_detail">
-<!--                                    再次循环输出商品的二级分类列表-->
-                                    <?php foreach (\backend\models\Category::find()->where(['parent_id'=>$v1->id])->all() as $k2=>$v2):?>
+            <div class="cat_bd <?=Yii::$app->controller->id."/".Yii::$app->controller->action->id==="index/show"?"":"none"?>">
+                <!--                        循环输出商品的一级列表-->
+                  <?php foreach (\backend\models\Category::find()->where(['parent_id'=>0])->all() as $k1=>$v1):?>
+                      <div class="cat <?=$k1==0?"item1":""?>">
+                          <h3><a href="<?=\yii\helpers\Url::to(['list','id'=>$v1->id])?>"><?=$v1->name?></a> <b></b></h3>
+                          <div class="cat_detail">
+                              <!--                                    再次循环输出商品的二级分类列表-->
+                                <?php foreach (\backend\models\Category::find()->where(['parent_id'=>$v1->id])->all() as $k2=>$v2):?>
                                     <dl class="<?=$k2==0?"dl_1st":""?>">
-                                          <dt><a href="<?=\yii\helpers\Url::to(['list','id'=>$v2->id])?>"><?=$v2->name?></a></dt>
-                                          <dd>
-<!--                                                最后循环输出商品的三级分类的列表-->
-                                                <?php foreach (\backend\models\Category::find()->where(['parent_id'=>$v2->id])->all() as $k3=>$v3):?>
-                                                <a href="<?=\yii\helpers\Url::to(['list','id'=>$v3->id])?>"><?=$v3->name?></a>
-                                                <?php endforeach;?>
-                                          </dd>
+                                        <dt><a href="<?=\yii\helpers\Url::to(['list','id'=>$v2->id])?>"><?=$v2->name?></a></dt>
+                                        <dd>
+                                            <!--                                                最后循环输出商品的三级分类的列表-->
+                                              <?php foreach (\backend\models\Category::find()->where(['parent_id'=>$v2->id])->all() as $k3=>$v3):?>
+                                                  <a href="<?=\yii\helpers\Url::to(['list','id'=>$v3->id])?>"><?=$v3->name?></a>
+                                              <?php endforeach;?>
+                                        </dd>
                                     </dl>
-                                    <?php endforeach;?>
+                                <?php endforeach;?>
 
-                              </div>
-                        </div>
-                        <?php endforeach;?>
-                  </div>
-
+                          </div>
+                      </div>
+                  <?php endforeach;?>
             </div>
-            <!--  商品分类部分 end-->
 
-            <div class="navitems fl">
-                  <ul class="fl">
-                        <li class="current"><a href="<?=\yii\helpers\Url::to(['index/show'])?>">首页</a></li>
-                        <li><a href="">电脑频道</a></li>
-                        <li><a href="">家用电器</a></li>
-                        <li><a href="">品牌大全</a></li>
-                        <li><a href="">团购</a></li>
-                        <li><a href="">积分商城</a></li>
-                        <li><a href="">夺宝奇兵</a></li>
-                  </ul>
-                  <div class="right_corner fl"></div>
-            </div>
-      </div>
+        </div>
+        <!--  商品分类部分 end-->
+
+        <div class="navitems fl">
+            <ul class="fl">
+                <li class="current"><a href="<?=\yii\helpers\Url::to(['index/show'])?>">首页</a></li>
+                <li><a href="">电脑频道</a></li>
+                <li><a href="">家用电器</a></li>
+                <li><a href="">品牌大全</a></li>
+                <li><a href="">团购</a></li>
+                <li><a href="">积分商城</a></li>
+                <li><a href="">夺宝奇兵</a></li>
+            </ul>
+            <div class="right_corner fl"></div>
+        </div>
+    </div>
+    <?php
+        $html=ob_get_clean();
+        $name = Yii::$app->controller->id."/".Yii::$app->controller->action->id=="index/show"?"show":"other";
+//        var_dump($name);exit;
+        if(Yii::$app->cache->get($name)){
+            echo Yii::$app->cache->get($name);
+        }else{
+            Yii::$app->cache->set($name,$html);
+            echo $html;
+        }
+    ?>
       <!-- 导航条部分 end -->
 </div>

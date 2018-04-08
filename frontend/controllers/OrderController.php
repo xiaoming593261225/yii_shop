@@ -84,7 +84,6 @@ class OrderController extends \yii\web\Controller
             $goods = Goods::find()->where(['in','id',$goodsID])->all();
             $shopPrice = 0;
             $shopNum = 0;
-
             foreach ($goods as $good){
                   $shopPrice+=$good->shop_price*$cart[$good->id];
                   $shopNum+=$cart[$good->id];
@@ -97,10 +96,7 @@ class OrderController extends \yii\web\Controller
 //                  事务的处理
                   $db = \Yii::$app->db;
                   $transaction = $db->beginTransaction();
-
                   try {
-
-
 //                  配送方式
                         $order = new Order();
 //                  var_dump($order);exit;
@@ -262,4 +258,37 @@ class OrderController extends \yii\web\Controller
 
             return $response;
       }
+
+//      支付的状态通知
+      public function actionStatus($id){
+            $roder = Order::findOne($id);
+            return Json::encode($roder);
+      }
+
+//      超时的处理
+      public function actionClear(){
+//            事务的处理
+                  $db = \Yii::$app->db;
+                  $transaction = $db->beginTransaction();
+                  try {
+            $orders = Order::find()->where(['status'=>1])->andWhere(['<','create_time',time()-900])->asArray()->all();
+            $ordersId = array_column($orders,"id");
+            var_dump($ordersId);
+            Order::updateAll(['status'=>1],['in','id',$orders]);
+//            库存还原
+            foreach ($orders as $order){
+//                  商品详情
+                  $orderDetal = OrderDetail::find()->where(['order_id'=>$order['id']])->all();
+//                  循环商品详情
+                  foreach ($orderDetal as $value){
+                        Goods::updateAllCounters(['stock'=>$value->amount],['id'=>$value->goods_id]);
+                  }
+            }
+                        $transaction->commit();  //提交事务
+                  } catch(Exception $e) {
+                        $transaction->rollBack(); //回滚
+                  }
+
+      }
+
 }
